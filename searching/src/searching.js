@@ -31,3 +31,23 @@ let arr = [3, 5, 6, 8, 11, 12, 14, 15, 17, 18];
 binarySearch(arr, 8, 0, arr.length - 1);
 
 
+dfsInOrder(){
+  if(this.left) {
+    this.left.dsfInOrder();
+  }
+  console.log(this.key);
+  if(this.right) {
+    this.right.dsfInOrder();
+  }
+}
+
+dfsPostOrder(){
+  if(this.left) {
+    this.left.dsfPostOrder();
+  }
+
+  if(this.right) {
+    this.right.dsfPostOrder();
+  }
+  console.log(this.key);
+}
