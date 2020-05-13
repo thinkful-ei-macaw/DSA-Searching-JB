@@ -8,29 +8,26 @@ class App extends React.Component {
     folders: [],
     counter: 0,
   };
-  binarySearch(array, value, start, end) {
+  binarySearch(array, value, start, end, counter = 0) {
     var start = start === undefined ? 0 : start;
     var end = end === undefined ? array.length : end;
-
     if (start > end) {
       return -1;
     }
 
     const index = Math.floor((start + end) / 2);
-    this.setState((state) => {
-      return { counter: state.counter + 1 };
-    });
-    console.log(index);
+
+    counter += 1;
 
     const item = array[index];
 
     // console.log(start, end);
     if (item === value) {
-      return this.state.counter;
+      return counter;
     } else if (item < value) {
-      return this.binarySearch(array, value, index + 1, end);
+      return this.binarySearch(array, value, index + 1, end, counter);
     } else if (item > value) {
-      return this.binarySearch(array, value, start, index - 1);
+      return this.binarySearch(array, value, start, index - 1, counter);
     }
   }
 
@@ -142,7 +139,9 @@ class App extends React.Component {
     console.log(data);
     let values = parseInt(e.target.folderinput.value);
     console.log(values);
-    console.log(this.binarySearch(data, values, 0, data.length - 1));
+    this.setState((state) => {
+      return { counter: this.binarySearch(data, values, 0, data.length - 1) };
+    });
   };
 
   render() {
@@ -154,6 +153,7 @@ class App extends React.Component {
           <input id="folderinput" name="folderinput" type="number" />
           <button type="submit">Submit </button>
         </form>
+        <p>{this.state.counter}</p>
       </div>
     );
   }
